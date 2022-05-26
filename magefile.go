@@ -77,21 +77,18 @@ func gen(bufImage, fileSources string) error {
 		return fmt.Errorf("could not find protobuf path: %v.\nPlease run 'bundle install'", err)
 	}
 
-	fmt.Printf("found: %v \n", protobufPath)
-
 	files, err := getClientFiles(fileSources)
 	if err != nil {
 		return err
 	}
 
 	oldPath := os.Getenv("PATH")
-
 	pathSeparator := string(os.PathListSeparator)
 	path := oldPath +
 		pathSeparator +
 		filepath.Dir(deps.BinPath("protoc")) +
 		pathSeparator +
-		filepath.Dir(fmt.Sprintf("%s%s%s", protobufPath, "/bin/", "protoc-gen-ruby"))
+		filepath.Dir(fmt.Sprintf("%s/%s/%s", protobufPath, "bin", "protoc-gen-ruby"))
 
 	return buf.RunWithEnv(map[string]string{
 		"PATH": path,
