@@ -1,4 +1,6 @@
 version: v1
 plugins:
-  - name: ruby
+  - remote: buf.build/grpc/plugins/ruby
+    out: ./lib
+  - remote: buf.build/protocolbuffers/plugins/ruby
     out: ./lib

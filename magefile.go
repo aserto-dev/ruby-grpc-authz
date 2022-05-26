@@ -14,7 +14,12 @@ import (
 	"github.com/aserto-dev/mage-loot/deps"
 	"github.com/aserto-dev/mage-loot/fsutil"
 	"github.com/aserto-dev/mage-loot/mage"
-	"github.com/magefile/mage/sh"
+)
+
+const (
+	googleBufImage  = "buf.build/googleapis/googleapis"
+	openApiBufImage = "buf.build/grpc-ecosystem/grpc-gateway"
+	asertoBufImage  = "buf.build/aserto-dev/aserto"
 )
 
 func All() error {
@@ -72,11 +77,6 @@ func getProtoRepo() string {
 }
 
 func gen(bufImage, fileSources string) error {
-	protobufPath, err := sh.Output("bundle", "info", "protobuf", "--path")
-	if err != nil {
-		return fmt.Errorf("could not find protobuf path: %v.\nPlease run 'bundle install'", err)
-	}
-
 	files, err := getClientFiles(fileSources)
 	if err != nil {
 		return err
@@ -86,23 +86,29 @@ func gen(bufImage, fileSources string) error {
 	pathSeparator := string(os.PathListSeparator)
 	path := oldPath +
 		pathSeparator +
-		filepath.Dir(deps.BinPath("protoc")) +
-		pathSeparator +
-		filepath.Dir(fmt.Sprintf("%s/%s/%s", protobufPath, "bin", "protoc-gen-ruby"))
+		filepath.Dir(deps.BinPath("protoc"))
 
-	return buf.RunWithEnv(map[string]string{
-		"PATH": path,
-	},
-		buf.AddArg("generate"),
-		buf.AddArg("--template"),
-		buf.AddArg(filepath.Join("buf", "buf.gen.yaml")),
-		buf.AddArg(bufImage),
-		buf.AddPaths(files),
-	)
+	for bufImage, clientFiles := range files {
+		err = buf.RunWithEnv(map[string]string{
+			"PATH": path,
+		},
+			buf.AddArg("generate"),
+			buf.AddArg("--template"),
+			buf.AddArg(filepath.Join("buf", "buf.gen.yaml")),
+			buf.AddArg(bufImage),
+			buf.AddPaths(clientFiles),
+		)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+
 }
 
-func getClientFiles(fileSources string) ([]string, error) {
-	var clientFiles []string
+func getClientFiles(fileSources string) (map[string][]string, error) {
+	var clientFiles = make(map[string][]string)
 
 	bufExportDir, err := ioutil.TempDir("", "bufimage")
 	if err != nil {
@@ -114,7 +120,6 @@ func getClientFiles(fileSources string) ([]string, error) {
 	err = buf.Run(
 		buf.AddArg("export"),
 		buf.AddArg(fileSources),
-		buf.AddArg("--exclude-imports"),
 		buf.AddArg("-o"),
 		buf.AddArg(bufExportDir),
 	)
@@ -122,15 +127,48 @@ func getClientFiles(fileSources string) ([]string, error) {
 		return clientFiles, err
 	}
 
-	authorizerFiles, err := fsutil.Glob(filepath.Join(bufExportDir, "aserto", "authorizer", "authorizer", "**", "*.proto"), "")
-	if err != nil {
-		return clientFiles, err
+	authorizerPatterns := []string{
+		filepath.Join(bufExportDir, "aserto", "authorizer", "authorizer", "**", "*.proto"),
+		filepath.Join(bufExportDir, "aserto", "api", "**", "*.proto"),
+		filepath.Join(bufExportDir, "aserto", "options", "**", "*.proto"),
 	}
 
-	fmt.Printf("found: %v files \n", len(authorizerFiles))
+	googlePatterns := []string{
+		filepath.Join(bufExportDir, "google", "api", "**", "*.proto"),
+	}
 
-	for _, f := range authorizerFiles {
-		clientFiles = append(clientFiles, strings.TrimPrefix(f, bufExportDir+string(filepath.Separator)))
+	openApiPatterns := []string{
+		filepath.Join(bufExportDir, "protoc-gen-openapiv2", "options", "**", "*.proto"),
+	}
+
+	for _, pattern := range authorizerPatterns {
+		files, err := fsutil.Glob(pattern, "")
+		if err != nil {
+			return clientFiles, err
+		}
+		for _, file := range files {
+			clientFiles[asertoBufImage] = append(clientFiles[asertoBufImage], strings.TrimPrefix(file, bufExportDir+string(filepath.Separator)))
+		}
+	}
+
+	for _, pattern := range googlePatterns {
+		files, err := fsutil.Glob(pattern, "")
+		if err != nil {
+			return clientFiles, err
+		}
+		for _, file := range files {
+			clientFiles[googleBufImage] = append(clientFiles[googleBufImage], strings.TrimPrefix(file, bufExportDir+string(filepath.Separator)))
+		}
+	}
+
+	for _, pattern := range openApiPatterns {
+		files, err := fsutil.Glob(pattern, "")
+		if err != nil {
+			return clientFiles, err
+		}
+		for _, file := range files {
+			clientFiles[openApiBufImage] = append(clientFiles[openApiBufImage], strings.TrimPrefix(file, bufExportDir+string(filepath.Separator)))
+		}
 	}
 
 	return clientFiles, nil
