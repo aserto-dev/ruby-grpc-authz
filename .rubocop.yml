@@ -1,0 +1,19 @@
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 2.7
+  Exclude:
+    - lib/**/*
+
+require:
+ - rubocop-rspec
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+RSpec/DescribeClass:
+  Enabled: true
+  Exclude:
+    - spec/client_spec.rb
+
+RSpec/ExampleLength:
+  Max: 20
