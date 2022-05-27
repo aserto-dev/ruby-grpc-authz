@@ -18,11 +18,13 @@ Gem::Specification.new do |spec|
   spec.metadata["source_code_uri"] = "https://github.com/aserto-dev/ruby-grpc-authz"
   spec.metadata["changelog_uri"] = "https://github.com/aserto-dev/ruby-grpc-authz"
 
-  # Specify which files should be added to the gem when it is released.
-  # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
-  spec.files = Dir.chdir(File.expand_path(__dir__)) do
-    `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
-  end
+  dirs =
+    Dir[File.join(__dir__, "README.md")] +
+    Dir[File.join(__dir__, "CHANGELOG.md")] +
+    Dir[File.join(__dir__, "LICENSE")] +
+    Dir[File.join(__dir__, "lib/**/*.rb")]
+
+  spec.files = dirs.map { |path| path.sub("#{__dir__}#{File::SEPARATOR}", "") }
 
   spec.require_paths = ["lib"]
   spec.metadata["rubygems_mfa_required"] = "true"

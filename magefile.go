@@ -14,6 +14,7 @@ import (
 	"github.com/aserto-dev/mage-loot/deps"
 	"github.com/aserto-dev/mage-loot/fsutil"
 	"github.com/aserto-dev/mage-loot/mage"
+	"github.com/magefile/mage/sh"
 )
 
 const (
@@ -66,6 +67,37 @@ func GenerateDev() error {
 // Builds the aserto proto image
 func BuildDev() error {
 	return mage.RunDir(getProtoRepo(), mage.AddArg("build"))
+}
+
+// Removes generated files
+func Clean() error {
+	return os.RemoveAll("lib")
+
+}
+
+// builds the gem
+func Build() error {
+	err := sh.RunV("mkdir", "-p", "build")
+	if err != nil {
+		return err
+	}
+
+	err = sh.RunV("gem", "build")
+	if err != nil {
+		return err
+	}
+
+	gemName, err := sh.Output("find", ".", "-maxdepth", "1", "-iname", "aserto-grpc-authz-*.gem")
+	if err != nil {
+		return err
+	}
+	err = sh.RunV("cp", fmt.Sprintf("./%s", gemName), fmt.Sprintf("./build/%s", gemName))
+	if err != nil {
+		return err
+	}
+
+	return sh.Rm(gemName)
+
 }
 
 func getProtoRepo() string {
@@ -172,9 +204,4 @@ func getClientFiles(fileSources string) (map[string][]string, error) {
 	}
 
 	return clientFiles, nil
-}
-
-// Removes generated files
-func Clean() error {
-	return os.RemoveAll("lib")
 }
