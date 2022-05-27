@@ -1,0 +1,44 @@
+name: ci
+
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    inputs:
+      proto_ref:
+      proto_sha:
+  push:
+    branches:
+      - main
+      - v*
+    # Publish `v1.2.3` tags as releases.
+    tags:
+      - v*
+  # Run tests for PRs
+  pull_request:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby: [2.7, 3.0, 3.1]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+
+      - name: install bundler and gems
+        run: |
+          gem install bundler
+          bundle install --jobs 3 --retry 3
+
+      - name: Run rubocop
+        run: |
+          bundle exec rubocop --parallel
+
+      - name: run RSpec
+        run: |
+          bundle exec rspec
