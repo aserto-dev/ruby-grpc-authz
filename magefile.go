@@ -17,9 +17,9 @@ import (
 )
 
 const (
-	googleBufImage  = "buf.build/googleapis/googleapis"
-	openApiBufImage = "buf.build/grpc-ecosystem/grpc-gateway"
-	asertoBufImage  = "buf.build/aserto-dev/aserto"
+	googleApiBufImage   = "buf.build/googleapis/googleapis"
+	grpcGatewayBufImage = "buf.build/grpc-ecosystem/grpc-gateway"
+	asertoBufImage      = "buf.build/aserto-dev/aserto"
 )
 
 func All() error {
@@ -133,11 +133,11 @@ func getClientFiles(fileSources string) (map[string][]string, error) {
 		filepath.Join(bufExportDir, "aserto", "options", "**", "*.proto"),
 	}
 
-	googlePatterns := []string{
+	googleApiPatterns := []string{
 		filepath.Join(bufExportDir, "google", "api", "**", "*.proto"),
 	}
 
-	openApiPatterns := []string{
+	grpcGatewayPatterns := []string{
 		filepath.Join(bufExportDir, "protoc-gen-openapiv2", "options", "**", "*.proto"),
 	}
 
@@ -151,23 +151,23 @@ func getClientFiles(fileSources string) (map[string][]string, error) {
 		}
 	}
 
-	for _, pattern := range googlePatterns {
+	for _, pattern := range googleApiPatterns {
 		files, err := fsutil.Glob(pattern, "")
 		if err != nil {
 			return clientFiles, err
 		}
 		for _, file := range files {
-			clientFiles[googleBufImage] = append(clientFiles[googleBufImage], strings.TrimPrefix(file, bufExportDir+string(filepath.Separator)))
+			clientFiles[googleApiBufImage] = append(clientFiles[googleApiBufImage], strings.TrimPrefix(file, bufExportDir+string(filepath.Separator)))
 		}
 	}
 
-	for _, pattern := range openApiPatterns {
+	for _, pattern := range grpcGatewayPatterns {
 		files, err := fsutil.Glob(pattern, "")
 		if err != nil {
 			return clientFiles, err
 		}
 		for _, file := range files {
-			clientFiles[openApiBufImage] = append(clientFiles[openApiBufImage], strings.TrimPrefix(file, bufExportDir+string(filepath.Separator)))
+			clientFiles[grpcGatewayBufImage] = append(clientFiles[grpcGatewayBufImage], strings.TrimPrefix(file, bufExportDir+string(filepath.Separator)))
 		}
 	}
 
@@ -176,5 +176,5 @@ func getClientFiles(fileSources string) (map[string][]string, error) {
 
 // Removes generated files
 func Clean() error {
-	return os.RemoveAll("aserto")
+	return os.RemoveAll("lib")
 }
