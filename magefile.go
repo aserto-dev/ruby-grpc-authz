@@ -36,7 +36,7 @@ func Deps() {
 	deps.GetAllDeps()
 }
 
-// Generate go code
+// Generate Ruby code
 func Generate() error {
 	bufImage := "buf.build/aserto-dev/aserto"
 
