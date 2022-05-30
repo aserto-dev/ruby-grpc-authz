@@ -11,6 +11,7 @@ import (
 	"strings"
 
 	"github.com/aserto-dev/mage-loot/buf"
+	"github.com/aserto-dev/mage-loot/common"
 	"github.com/aserto-dev/mage-loot/deps"
 	"github.com/aserto-dev/mage-loot/fsutil"
 	"github.com/aserto-dev/mage-loot/mage"
@@ -72,6 +73,11 @@ func BuildDev() error {
 
 // Removes generated files
 func Clean() error {
+	err := os.RemoveAll("build")
+	if err != nil {
+		return err
+	}
+
 	return os.RemoveAll("lib")
 
 }
@@ -89,6 +95,23 @@ func Build() error {
 	}
 
 	return sh.RunV("gem", "build", "--output", fmt.Sprintf("./build/%s-%s.gem", gemName, version))
+}
+
+func Bump(next string) error {
+	nextVersion, err := common.NextVersion(next)
+	if err != nil {
+		return err
+	}
+	fmt.Println("Bumping version to", nextVersion)
+
+	fi, err := os.OpenFile("VERSION", os.O_RDWR|os.O_CREATE, 0755)
+	if err != nil {
+		return err
+	}
+	defer fi.Close()
+
+	_, err = fi.WriteString(nextVersion)
+	return err
 }
 
 func getProtoRepo() string {
