@@ -88,19 +88,7 @@ func Build() error {
 		return err
 	}
 
-	err = sh.RunV("gem", "build")
-	if err != nil {
-		return err
-	}
-
-	gemNameAndVersion := fmt.Sprintf("%s-%s.gem", gemName, version)
-	err = sh.RunV("cp", fmt.Sprintf("./%s", gemNameAndVersion), fmt.Sprintf("./build/%s", gemNameAndVersion))
-	if err != nil {
-		return err
-	}
-
-	return sh.Rm(gemNameAndVersion)
-
+	return sh.RunV("gem", "build", "--output", fmt.Sprintf("./build/%s-%s.gem", gemName, version))
 }
 
 func getProtoRepo() string {
