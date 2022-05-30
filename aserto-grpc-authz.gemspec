@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |spec|
   spec.name          = "aserto-grpc-authz"
-  spec.version       = "0.0.1"
+  spec.version       = File.read(File.join(__dir__, "VERSION")).chomp
   spec.authors       = ["Aserto"]
   spec.email         = ["aserto@aserto.com"]
 
@@ -22,6 +22,7 @@ Gem::Specification.new do |spec|
     Dir[File.join(__dir__, "README.md")] +
     Dir[File.join(__dir__, "CHANGELOG.md")] +
     Dir[File.join(__dir__, "LICENSE")] +
+    Dir[File.join(__dir__, "VERSION")] +
     Dir[File.join(__dir__, "lib/**/*.rb")]
 
   spec.files = dirs.map { |path| path.sub("#{__dir__}#{File::SEPARATOR}", "") }

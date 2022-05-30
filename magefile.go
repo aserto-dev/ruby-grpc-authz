@@ -21,6 +21,7 @@ const (
 	googleApiBufImage   = "buf.build/googleapis/googleapis"
 	grpcGatewayBufImage = "buf.build/grpc-ecosystem/grpc-gateway"
 	asertoBufImage      = "buf.build/aserto-dev/aserto"
+	gemName             = "aserto-grpc-authz"
 )
 
 func All() error {
@@ -82,21 +83,23 @@ func Build() error {
 		return err
 	}
 
+	version, err := sh.Output("cat", "VERSION")
+	if err != nil {
+		return err
+	}
+
 	err = sh.RunV("gem", "build")
 	if err != nil {
 		return err
 	}
 
-	gemName, err := sh.Output("find", ".", "-maxdepth", "1", "-iname", "aserto-grpc-authz-*.gem")
-	if err != nil {
-		return err
-	}
-	err = sh.RunV("cp", fmt.Sprintf("./%s", gemName), fmt.Sprintf("./build/%s", gemName))
+	gemNameAndVersion := fmt.Sprintf("%s-%s.gem", gemName, version)
+	err = sh.RunV("cp", fmt.Sprintf("./%s", gemNameAndVersion), fmt.Sprintf("./build/%s", gemNameAndVersion))
 	if err != nil {
 		return err
 	}
 
-	return sh.Rm(gemName)
+	return sh.Rm(gemNameAndVersion)
 
 }
 
