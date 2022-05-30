@@ -14,12 +14,14 @@ import (
 	"github.com/aserto-dev/mage-loot/deps"
 	"github.com/aserto-dev/mage-loot/fsutil"
 	"github.com/aserto-dev/mage-loot/mage"
+	"github.com/magefile/mage/sh"
 )
 
 const (
 	googleApiBufImage   = "buf.build/googleapis/googleapis"
 	grpcGatewayBufImage = "buf.build/grpc-ecosystem/grpc-gateway"
 	asertoBufImage      = "buf.build/aserto-dev/aserto"
+	gemName             = "aserto-grpc-authz"
 )
 
 func All() error {
@@ -66,6 +68,27 @@ func GenerateDev() error {
 // Builds the aserto proto image
 func BuildDev() error {
 	return mage.RunDir(getProtoRepo(), mage.AddArg("build"))
+}
+
+// Removes generated files
+func Clean() error {
+	return os.RemoveAll("lib")
+
+}
+
+// builds the gem
+func Build() error {
+	err := sh.RunV("mkdir", "-p", "build")
+	if err != nil {
+		return err
+	}
+
+	version, err := sh.Output("cat", "VERSION")
+	if err != nil {
+		return err
+	}
+
+	return sh.RunV("gem", "build", "--output", fmt.Sprintf("./build/%s-%s.gem", gemName, version))
 }
 
 func getProtoRepo() string {
@@ -172,9 +195,4 @@ func getClientFiles(fileSources string) (map[string][]string, error) {
 	}
 
 	return clientFiles, nil
-}
-
-// Removes generated files
-func Clean() error {
-	return os.RemoveAll("lib")
 }

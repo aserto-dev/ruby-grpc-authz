@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |spec|
   spec.name          = "aserto-grpc-authz"
-  spec.version       = "0.0.1"
+  spec.version       = File.read(File.join(__dir__, "VERSION")).chomp
   spec.authors       = ["Aserto"]
   spec.email         = ["aserto@aserto.com"]
 
@@ -18,11 +18,14 @@ Gem::Specification.new do |spec|
   spec.metadata["source_code_uri"] = "https://github.com/aserto-dev/ruby-grpc-authz"
   spec.metadata["changelog_uri"] = "https://github.com/aserto-dev/ruby-grpc-authz"
 
-  # Specify which files should be added to the gem when it is released.
-  # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
-  spec.files = Dir.chdir(File.expand_path(__dir__)) do
-    `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
-  end
+  dirs =
+    Dir[File.join(__dir__, "README.md")] +
+    Dir[File.join(__dir__, "CHANGELOG.md")] +
+    Dir[File.join(__dir__, "LICENSE")] +
+    Dir[File.join(__dir__, "VERSION")] +
+    Dir[File.join(__dir__, "lib/**/*.rb")]
+
+  spec.files = dirs.map { |path| path.sub("#{__dir__}#{File::SEPARATOR}", "") }
 
   spec.require_paths = ["lib"]
   spec.metadata["rubygems_mfa_required"] = "true"
@@ -31,6 +34,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "grpc", "~> 1.46"
 
   # development dependencies
+  spec.add_development_dependency("bundler", ">= 1.15.0", "< 3.0")
   spec.add_development_dependency "grpc_mock", "~> 0.4"
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "rubocop-rspec", "~> 2.11"
