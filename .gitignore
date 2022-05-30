@@ -14,4 +14,10 @@
 # rspec failure tracking
 .rspec_status
 
+# build artifacts
 build
+
+# bundler
+.bundle
+Gemfile.lock
+Gemfile.local

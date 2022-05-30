@@ -34,6 +34,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "grpc", "~> 1.46"
 
   # development dependencies
+  spec.add_development_dependency("bundler", ">= 1.15.0", "< 3.0")
   spec.add_development_dependency "grpc_mock", "~> 0.4"
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "rubocop-rspec", "~> 2.11"
