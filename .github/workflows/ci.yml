@@ -29,11 +29,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
-
-      - name: install bundler and gems
-        run: |
-          gem install bundler
-          bundle install --jobs 3 --retry 3
+          bundler-cache: true
 
       - name: Run rubocop
         run: |
