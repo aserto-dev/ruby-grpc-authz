@@ -8,6 +8,10 @@ describe "Ruby GRPC client" do
     )
   end
 
+  it "has version" do
+    expect(Aserto::Grpc::Authz::VERSION).not_to be_empty
+  end
+
   describe ".query" do
     before do
       GrpcMock.stub_request("/aserto.authorizer.authorizer.v1.Authorizer/Query").to_return do
