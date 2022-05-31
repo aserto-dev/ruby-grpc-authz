@@ -20,7 +20,7 @@ Or install it yourself as:
 
 ## Usage
 ```ruby
-require 'aserto/authorizer/authorizer/v1/authorizer_services_pb'
+require 'aserto-grpc-authz'
 
 query_request = Aserto::Authorizer::Authorizer::V1::QueryRequest.new(
   {
@@ -61,14 +61,14 @@ Prerequisites:
     - go >= 1.17 to generate Ruby code
     - Ruby >= 2.7.0 to run the code
 
-To generate Ruby code for the gRPC client, run `mage generate`.
+After checking out the repo, run `mage generate` to generate Ruby code.
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `bundle exec rspec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+ Run `bundle install` to install dependencies. Then, run `bundle exec rspec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/aserto-dev/aserto-grpc-authz. This project is intended to be a safe, welcoming space for collaboration.
+Bug reports and pull requests are welcome on GitHub at https://github.com/aserto-dev/ruby-grpc-authz. This project is intended to be a safe, welcoming space for collaboration.
 
 ## License
 

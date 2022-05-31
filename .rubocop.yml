@@ -8,6 +8,10 @@ AllCops:
 require:
  - rubocop-rspec
 
+Naming/FileName:
+  Exclude:
+    - lib/aserto-grpc-authz.rb
+
 Style/StringLiterals:
   EnforcedStyle: double_quotes
 
