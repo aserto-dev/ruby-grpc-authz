@@ -97,6 +97,8 @@ jobs:
         ruby: [2.7, 3.0, 3.1]
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -125,6 +127,11 @@ jobs:
           token: ${{ secrets.VAULT_TOKEN }}
           secrets: |
             kv/data/rubygems  "RUBYGEMS_API_KEY" | GEM_HOST_API_KEY;
+
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Setup Go
         uses: actions/setup-go@v2
