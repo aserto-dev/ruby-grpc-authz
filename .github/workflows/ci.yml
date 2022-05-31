@@ -84,6 +84,7 @@ jobs:
       with:
         default_author: github_actions
         add: 'lib'
+        push: origin HEAD:main
 
     - name: Build the gem
       run: go run mage.go build
@@ -173,7 +174,7 @@ jobs:
       - name: Build and push the gem
         run: go run mage.go release
 
-      - name: Build and push the gem
+      - name: Bump to the next version
         run: go run mage.go bump patch
 
       - name: Commit changes
@@ -182,3 +183,4 @@ jobs:
           default_author: github_actions
           message: 'Bump to next version'
           add: 'VERSION'
+          push: origin HEAD:main
