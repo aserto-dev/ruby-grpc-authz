@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Aserto"]
   spec.email         = ["aserto@aserto.com"]
 
-  spec.summary       = "Aserto Authorizer GRPC §Client"
+  spec.summary       = "Aserto Authorizer GRPC Client"
   spec.description   = "Ruby generated GRPC client for Aserto Authorizer"
   spec.homepage      = "https://www.aserto.com"
   spec.license       = "Apache-2.0"
