@@ -2,11 +2,15 @@ AllCops:
   NewCops: enable
   TargetRubyVersion: 2.7
   Exclude:
-    - lib/**/*
+    - generated/**/*
     - vendor/bundle/**/*
 
 require:
  - rubocop-rspec
+
+Naming/FileName:
+  Exclude:
+    - lib/aserto-grpc-authz.rb
 
 Style/StringLiterals:
   EnforcedStyle: double_quotes

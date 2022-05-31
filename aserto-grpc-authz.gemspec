@@ -23,11 +23,12 @@ Gem::Specification.new do |spec|
     Dir[File.join(__dir__, "CHANGELOG.md")] +
     Dir[File.join(__dir__, "LICENSE")] +
     Dir[File.join(__dir__, "VERSION")] +
-    Dir[File.join(__dir__, "lib/**/*.rb")]
+    Dir[File.join(__dir__, "lib/**/*.rb")] +
+    Dir[File.join(__dir__, "generated/**/*.rb")]
 
   spec.files = dirs.map { |path| path.sub("#{__dir__}#{File::SEPARATOR}", "") }
 
-  spec.require_paths = ["lib"]
+  spec.require_paths = %w[lib generated]
   spec.metadata["rubygems_mfa_required"] = "true"
 
   # runtime dependencies

@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 require "bundler/setup"
-require "aserto/authorizer/authorizer/v1/authorizer_services_pb"
 require "rspec"
 require "grpc_mock/rspec"
+
+require "aserto-grpc-authz"
 
 GrpcMock.disable_net_connect!
 
