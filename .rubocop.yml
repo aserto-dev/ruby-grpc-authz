@@ -2,7 +2,7 @@ AllCops:
   NewCops: enable
   TargetRubyVersion: 2.7
   Exclude:
-    - lib/**/*
+    - generated/**/*
     - vendor/bundle/**/*
 
 require:

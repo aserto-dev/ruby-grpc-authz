@@ -78,7 +78,7 @@ func Clean() error {
 		return err
 	}
 
-	return os.RemoveAll("lib")
+	return os.RemoveAll("generated")
 
 }
 
