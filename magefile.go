@@ -114,6 +114,23 @@ func Bump(next string) error {
 	return err
 }
 
+func Push() error {
+	version, err := sh.Output("cat", "VERSION")
+	if err != nil {
+		return err
+	}
+
+	return sh.RunV("gem", "push", fmt.Sprintf("./build/%s-%s.gem", gemName, version))
+}
+
+func Release() error {
+	err := Build()
+	if err != nil {
+		return err
+	}
+	return Push()
+}
+
 func getProtoRepo() string {
 	protoRepo := os.Getenv("PROTO_REPO")
 	if protoRepo == "" {
