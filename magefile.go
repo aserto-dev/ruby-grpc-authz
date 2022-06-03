@@ -145,16 +145,8 @@ func gen(bufImage, fileSources string) error {
 		return err
 	}
 
-	oldPath := os.Getenv("PATH")
-	pathSeparator := string(os.PathListSeparator)
-	path := oldPath +
-		pathSeparator +
-		filepath.Dir(deps.BinPath("protoc"))
-
 	for bufImage, clientFiles := range files {
-		err = buf.RunWithEnv(map[string]string{
-			"PATH": path,
-		},
+		err = buf.Run(
 			buf.AddArg("generate"),
 			buf.AddArg("--template"),
 			buf.AddArg(filepath.Join("buf", "buf.gen.yaml")),

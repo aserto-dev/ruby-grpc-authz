@@ -6,13 +6,3 @@ go:
   sver:
     importPath: "github.com/aserto-dev/sver/cmd/sver"
     version: "v1.3.9"
-
-bin:
-  protoc:
-    url: 'https://github.com/protocolbuffers/protobuf/releases/download/v{{.Version}}/protoc-{{.Version}}-{{if eq .OS "darwin"}}osx{{else}}{{.OS}}{{end}}-x86_64.zip'
-    version: "21.0"
-    sha:
-      darwin-arm64: "79cf6298d80b997d6e896e81df5f342e1db86e6b0a4c8c3f9c435c54818f8e15"
-      linux-amd64: "a2a92003da7b8c0c08aab530a3c1967d377c2777723482adb9d2eb38c87a9d5f"
-    zipPaths:
-    - "bin/protoc"
