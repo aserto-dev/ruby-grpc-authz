@@ -9,8 +9,10 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   add_file("aserto/api/v1/policy_context.proto", :syntax => :proto3) do
     add_message "aserto.api.v1.PolicyContext" do
       optional :id, :string, 1, json_name: "id"
+      optional :name, :string, 4, json_name: "name"
       optional :path, :string, 2, json_name: "path"
       repeated :decisions, :string, 3, json_name: "decisions"
+      optional :instance_label, :string, 5, json_name: "instanceLabel"
     end
   end
 end

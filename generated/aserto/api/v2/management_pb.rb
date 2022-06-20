@@ -9,6 +9,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :policy_id, :string, 1, json_name: "policyId"
       optional :policy_label, :string, 2, json_name: "policyLabel"
       optional :remote_host, :string, 3, json_name: "remoteHost"
+      optional :connection_id, :string, 4, json_name: "connectionId"
     end
     add_message "aserto.api.v2.InstanceRegistration" do
       optional :id, :string, 1, json_name: "id"

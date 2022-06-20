@@ -43,6 +43,26 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :generated, :bool, 9, json_name: "generated"
       optional :json_schema, :string, 10, json_name: "jsonSchema"
     end
+    add_enum "aserto.api.v1.ProviderID" do
+      value :PROVIDER_ID_UNKNOWN, 0
+      value :PROVIDER_ID_ACMECORP, 1
+      value :PROVIDER_ID_ASERTO_REGISTRY, 2
+      value :PROVIDER_ID_BUNDLER, 3
+      value :PROVIDER_ID_AUTH0, 4
+      value :PROVIDER_ID_DECISION_LOGS, 5
+      value :PROVIDER_ID_DISCOVERY, 6
+      value :PROVIDER_ID_EDGE_DIRECTORY, 7
+      value :PROVIDER_ID_GHCR_PAT, 8
+      value :PROVIDER_ID_GITHUB, 9
+      value :PROVIDER_ID_GITHUB_PAT, 10
+      value :PROVIDER_ID_GITLAB_PAT, 11
+      value :PROVIDER_ID_AUTHORIZER, 12
+      value :PROVIDER_ID_OKTA, 13
+      value :PROVIDER_ID_OPCR, 14
+      value :PROVIDER_ID_OPCR_PUBLIC, 15
+      value :PROVIDER_ID_EDGE_AUTHORIZER, 16
+      value :PROVIDER_ID_CITADEL, 17
+    end
     add_enum "aserto.api.v1.ProviderKind" do
       value :PROVIDER_KIND_UNKNOWN, 0
       value :PROVIDER_KIND_IDP, 1
@@ -87,6 +107,7 @@ module Aserto
       Provider = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("aserto.api.v1.Provider").msgclass
       Connection = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("aserto.api.v1.Connection").msgclass
       ConfigElement = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("aserto.api.v1.ConfigElement").msgclass
+      ProviderID = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("aserto.api.v1.ProviderID").enummodule
       ProviderKind = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("aserto.api.v1.ProviderKind").enummodule
       ConnectionType = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("aserto.api.v1.ConnectionType").enummodule
       ConfigElementKind = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("aserto.api.v1.ConfigElementKind").enummodule
