@@ -21,7 +21,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     add_enum "aserto.api.v2.InstanceType" do
       value :INSTANCE_TYPE_UNKNOWN, 0
       value :INSTANCE_TYPE_HOSTED, 1
-      value :INSTANCE_TYPE_SATELLITE, 2
+      value :INSTANCE_TYPE_EDGE_AUTHORIZER, 2
     end
   end
 end

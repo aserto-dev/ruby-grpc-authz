@@ -72,7 +72,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :PROVIDER_KIND_DECISION_LOGS, 5
       value :PROVIDER_KIND_DIRECTORY, 6
       value :PROVIDER_KIND_DISCOVERY, 7
-      value :PROVIDER_KIND_SATELLITE, 8
+      value :PROVIDER_KIND_EDGE_AUTHORIZER, 8
     end
     add_enum "aserto.api.v1.ConnectionType" do
       value :CONNECTION_TYPE_UNKNOWN, 0
