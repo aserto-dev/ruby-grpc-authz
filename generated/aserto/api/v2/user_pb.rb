@@ -3,21 +3,23 @@
 
 require 'google/protobuf'
 
-require 'google/protobuf/struct_pb'
-require 'aserto/api/v1/metadata_pb'
-require 'aserto/api/v1/user_pb'
-
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_file("aserto/api/v2/user.proto", :syntax => :proto3) do
-    add_message "aserto.api.v2.User" do
-      optional :id, :string, 1, json_name: "id"
-      optional :enabled, :bool, 2, json_name: "enabled"
-      optional :display_name, :string, 3, json_name: "displayName"
-      optional :email, :string, 4, json_name: "email"
-      map :identities, :string, :message, 6, "aserto.api.v1.IdentitySource"
-      optional :metadata, :message, 9, "aserto.api.v1.Metadata", json_name: "metadata"
-      optional :deleted, :bool, 10, json_name: "deleted"
-      optional :properties, :message, 11, "google.protobuf.Struct", json_name: "properties"
+    add_message "aserto.api.v2.UserProperties" do
+      optional :email, :string, 1, json_name: "email"
+      optional :picture, :string, 2, json_name: "picture"
+      optional :status, :enum, 3, "aserto.api.v2.UserStatus", json_name: "status"
+    end
+    add_enum "aserto.api.v2.UserStatus" do
+      value :USER_STATUS_UNKNOWN, 0
+      value :USER_STATUS_STAGED, 1
+      value :USER_STATUS_PROVISIONED, 2
+      value :USER_STATUS_ACTIVE, 3
+      value :USER_STATUS_RECOVERY, 4
+      value :USER_STATUS_PASSWORD_EXPIRED, 5
+      value :USER_STATUS_LOCKED_OUT, 6
+      value :USER_STATUS_SUSPENDED, 7
+      value :USER_STATUS_DEPROVISIONED, 8
     end
   end
 end
@@ -25,7 +27,8 @@ end
 module Aserto
   module Api
     module V2
-      User = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("aserto.api.v2.User").msgclass
+      UserProperties = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("aserto.api.v2.UserProperties").msgclass
+      UserStatus = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("aserto.api.v2.UserStatus").enummodule
     end
   end
 end
