@@ -4,10 +4,6 @@
 require 'google/protobuf'
 
 require 'google/protobuf/struct_pb'
-require 'aserto/api/v2/instance_pb'
-require 'aserto/api/v2/policy_pb'
-require 'aserto/api/v2/repository_pb'
-require 'aserto/api/v2/source_pb'
 
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_file("aserto/api/v2/workflows.proto", :syntax => :proto3) do
@@ -18,12 +14,6 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :status, :enum, 4, "aserto.api.v2.WorkflowState", json_name: "status"
       optional :event, :message, 5, "google.protobuf.Struct", json_name: "event"
       optional :message, :string, 6, json_name: "message"
-    end
-    add_message "aserto.api.v2.PolicyDesiredState" do
-      optional :policy, :message, 1, "aserto.api.v2.Policy", json_name: "policy"
-      optional :repository, :message, 2, "aserto.api.v2.Repository", json_name: "repository"
-      optional :source, :message, 3, "aserto.api.v2.Source", json_name: "source"
-      repeated :instance, :message, 4, "aserto.api.v2.Instance", json_name: "instance"
     end
     add_message "aserto.api.v2.ActivityResponse" do
       optional :activity, :string, 1, json_name: "activity"
@@ -63,7 +53,6 @@ module Aserto
   module Api
     module V2
       WorkflowEvent = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("aserto.api.v2.WorkflowEvent").msgclass
-      PolicyDesiredState = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("aserto.api.v2.PolicyDesiredState").msgclass
       ActivityResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("aserto.api.v2.ActivityResponse").msgclass
       WorkflowOptions = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("aserto.api.v2.WorkflowOptions").msgclass
       WorkflowResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("aserto.api.v2.WorkflowResponse").msgclass
