@@ -17,6 +17,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :name, :string, 2, json_name: "name"
       optional :created_at, :message, 4, "google.protobuf.Timestamp", json_name: "createdAt"
       optional :updated_at, :message, 5, "google.protobuf.Timestamp", json_name: "updatedAt"
+      optional :version_hash, :string, 6, json_name: "versionHash"
     end
     add_message "aserto.api.v2.PolicyState" do
       optional :policy, :message, 1, "aserto.api.v2.Policy", json_name: "policy"

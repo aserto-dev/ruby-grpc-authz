@@ -16,6 +16,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :repo, :string, 4, json_name: "repo"
       optional :created_at, :message, 5, "google.protobuf.Timestamp", json_name: "createdAt"
       optional :updated_at, :message, 6, "google.protobuf.Timestamp", json_name: "updatedAt"
+      optional :version_hash, :string, 7, json_name: "versionHash"
     end
   end
 end

@@ -17,6 +17,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :updated_at, :message, 5, "google.protobuf.Timestamp", json_name: "updatedAt"
       optional :instance_type, :enum, 6, "aserto.api.v2.InstanceType", json_name: "instanceType"
       proto3_optional :decision_logging, :bool, 7, json_name: "decisionLogging"
+      optional :version_hash, :string, 8, json_name: "versionHash"
     end
     add_enum "aserto.api.v2.InstanceType" do
       value :INSTANCE_TYPE_UNKNOWN, 0
