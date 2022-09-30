@@ -62,6 +62,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :PROVIDER_ID_OPCR_PUBLIC, 15
       value :PROVIDER_ID_EDGE_AUTHORIZER, 16
       value :PROVIDER_ID_CITADEL, 17
+      value :PROVIDER_ID_DIRECTORY, 18
     end
     add_enum "aserto.api.v1.ProviderKind" do
       value :PROVIDER_KIND_UNKNOWN, 0

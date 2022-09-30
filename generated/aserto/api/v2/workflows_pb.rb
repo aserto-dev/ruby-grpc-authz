@@ -18,7 +18,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     add_message "aserto.api.v2.ActivityResponse" do
       optional :activity, :string, 1, json_name: "activity"
       optional :state, :enum, 2, "aserto.api.v2.ActivityResponseState", json_name: "state"
-      optional :response, :string, 3, json_name: "response"
+      optional :response, :message, 3, "google.protobuf.Value", json_name: "response"
     end
     add_message "aserto.api.v2.WorkflowOptions" do
       optional :run_type, :enum, 1, "aserto.api.v2.WorkflowRunType", json_name: "runType"
