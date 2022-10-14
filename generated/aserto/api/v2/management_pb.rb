@@ -11,6 +11,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :remote_host, :string, 3, json_name: "remoteHost"
       optional :connection_id, :string, 4, json_name: "connectionId"
       optional :certificate_id, :string, 5, json_name: "certificateId"
+      optional :policy_name, :string, 6, json_name: "policyName"
     end
     add_message "aserto.api.v2.InstanceRegistration" do
       optional :id, :string, 1, json_name: "id"
