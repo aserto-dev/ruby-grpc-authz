@@ -18,6 +18,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       map :responses, :string, :message, 10, "grpc.gateway.protoc_gen_openapiv2.options.Response"
       optional :security_definitions, :message, 11, "grpc.gateway.protoc_gen_openapiv2.options.SecurityDefinitions", json_name: "securityDefinitions"
       repeated :security, :message, 12, "grpc.gateway.protoc_gen_openapiv2.options.SecurityRequirement", json_name: "security"
+      repeated :tags, :message, 13, "grpc.gateway.protoc_gen_openapiv2.options.Tag", json_name: "tags"
       optional :external_docs, :message, 14, "grpc.gateway.protoc_gen_openapiv2.options.ExternalDocumentation", json_name: "externalDocs"
       map :extensions, :string, :message, 15, "google.protobuf.Value"
     end
@@ -34,6 +35,24 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :deprecated, :bool, 11, json_name: "deprecated"
       repeated :security, :message, 12, "grpc.gateway.protoc_gen_openapiv2.options.SecurityRequirement", json_name: "security"
       map :extensions, :string, :message, 13, "google.protobuf.Value"
+      optional :parameters, :message, 14, "grpc.gateway.protoc_gen_openapiv2.options.Parameters", json_name: "parameters"
+    end
+    add_message "grpc.gateway.protoc_gen_openapiv2.options.Parameters" do
+      repeated :headers, :message, 1, "grpc.gateway.protoc_gen_openapiv2.options.HeaderParameter", json_name: "headers"
+    end
+    add_message "grpc.gateway.protoc_gen_openapiv2.options.HeaderParameter" do
+      optional :name, :string, 1, json_name: "name"
+      optional :description, :string, 2, json_name: "description"
+      optional :type, :enum, 3, "grpc.gateway.protoc_gen_openapiv2.options.HeaderParameter.Type", json_name: "type"
+      optional :format, :string, 4, json_name: "format"
+      optional :required, :bool, 5, json_name: "required"
+    end
+    add_enum "grpc.gateway.protoc_gen_openapiv2.options.HeaderParameter.Type" do
+      value :UNKNOWN, 0
+      value :STRING, 1
+      value :NUMBER, 2
+      value :INTEGER, 3
+      value :BOOLEAN, 4
     end
     add_message "grpc.gateway.protoc_gen_openapiv2.options.Header" do
       optional :description, :string, 1, json_name: "description"
@@ -120,8 +139,10 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :STRING, 7
     end
     add_message "grpc.gateway.protoc_gen_openapiv2.options.Tag" do
+      optional :name, :string, 1, json_name: "name"
       optional :description, :string, 2, json_name: "description"
       optional :external_docs, :message, 3, "grpc.gateway.protoc_gen_openapiv2.options.ExternalDocumentation", json_name: "externalDocs"
+      map :extensions, :string, :message, 4, "google.protobuf.Value"
     end
     add_message "grpc.gateway.protoc_gen_openapiv2.options.SecurityDefinitions" do
       map :security, :string, :message, 1, "grpc.gateway.protoc_gen_openapiv2.options.SecurityScheme"
@@ -180,6 +201,9 @@ module Grpc
       module Options
         Swagger = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("grpc.gateway.protoc_gen_openapiv2.options.Swagger").msgclass
         Operation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("grpc.gateway.protoc_gen_openapiv2.options.Operation").msgclass
+        Parameters = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("grpc.gateway.protoc_gen_openapiv2.options.Parameters").msgclass
+        HeaderParameter = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("grpc.gateway.protoc_gen_openapiv2.options.HeaderParameter").msgclass
+        HeaderParameter::Type = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("grpc.gateway.protoc_gen_openapiv2.options.HeaderParameter.Type").enummodule
         Header = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("grpc.gateway.protoc_gen_openapiv2.options.Header").msgclass
         Response = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("grpc.gateway.protoc_gen_openapiv2.options.Response").msgclass
         Info = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("grpc.gateway.protoc_gen_openapiv2.options.Info").msgclass
