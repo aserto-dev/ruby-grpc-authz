@@ -23,6 +23,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :INVITE_STATUS_DECLINED, 2
       value :INVITE_STATUS_EXPIRED, 3
       value :INVITE_STATUS_CANCELED, 4
+      value :INVITE_STATUS_ACTIVE, 5
     end
   end
 end
